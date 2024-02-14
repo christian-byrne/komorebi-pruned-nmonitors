@@ -1,23 +1,3 @@
-//
-//  Copyright (C) 2012-2017 Abraham Masri
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-//
-// Copied from Acis - Abraham Masri
-//
-
 using Gtk;
 using Gdk;
 using GLib;
@@ -36,9 +16,6 @@ namespace Komorebi.Utilities {
 	// Screen variables
 	int screenHeight;
 	int screenWidth;
-
-	// Icons variables
-	int iconSize;
 
 	// DateTime variables
 	bool dateTimeParallax;
@@ -91,45 +68,6 @@ namespace Komorebi.Utilities {
 	int assetMarginLeft;
 	int assetMarginBottom;
 
-
-
-	/* Returns an icon detected from file, IconTheme, etc .. */
-	public Pixbuf getIconFrom (string icon, int size) {
-
-		Pixbuf IconPixbuf = null;
-
-		if(icon == null || icon == "")
-			return IconPixbuf;
-
-		/* Try those methods:
-		 * 1- Icon is a file, somewhere in '/'.
-		 * 2- Icon is an icon in a IconTheme.
-		 * 3- Icon isn't in the current IconTheme.
-		 * 4- Icon is not available, use default.
-		 */
-		if(File.new_for_path(icon).query_exists()) {
-			IconPixbuf = new Pixbuf.from_file_at_scale(icon, size, size, false);
-			return IconPixbuf;
-		}
-
-
-		Gtk.IconTheme _IconTheme = Gtk.IconTheme.get_default ();
-		_IconTheme.prepend_search_path("/usr/share/pixmaps/");
-
-
-		try {
-			IconPixbuf = _IconTheme.load_icon (icon, size, IconLookupFlags.FORCE_SIZE);
-		} catch (Error e) {
-			if(IconPixbuf == null)
-				IconPixbuf = _IconTheme.load_icon ("application-default-icon", size, IconLookupFlags.FORCE_SIZE);
-		}
-
-
-		return IconPixbuf;
-
-	}
-
-	/* TAKEN FROM ACIS --- Until Acis is public */
 	/* Applies CSS theming for specified GTK+ Widget */
 	public void applyCSS (Widget[] widgets, string CSS) {
 
@@ -141,8 +79,6 @@ namespace Komorebi.Utilities {
 
 	}
 
-
-	/* TAKEN FROM ACIS --- Until Acis is public */
 	/* Allow alpha layer in the window */
 	public void addAlpha (Widget[] widgets) {
 
@@ -154,23 +90,19 @@ namespace Komorebi.Utilities {
 	/* Formats the date and time into a human read-able version */
 	public string formatDateTime (DateTime dateTime) {
 
-		if (OnScreen.timeTwentyFour)
 			return dateTime.format("%m/%d/%Y %H:%M");
 
-		return dateTime.format("%m/%d/%Y %l:%M %p");
 	}
 
 	/* Reads the .prop file */
-	public void readConfigurationFile () {
+	public void readConfigurationFile (int monitorNumber) {
 
 		// Default values
-		wallpaperName = "foggy_sunny_mountain";
-		timeTwentyFour = true;
-		showDesktopIcons = true;
-		enableVideoWallpapers = true;
+		wallpaperName = "bw-girl";
 
 		if(configFilePath == null)
-			configFilePath = Environment.get_home_dir() + "/.Komorebi.prop";
+			// Config file follows format of ".Komorebi{monitor_number}.prop" where {monitor_number} is the number of the monitor
+			configFilePath = Environment.get_home_dir() + "/.Komorebi" + monitorNumber.to_string() + ".prop";
 
 		if(configFile == null)
 			configFile = File.new_for_path(configFilePath);
@@ -192,22 +124,15 @@ namespace Komorebi.Utilities {
 
 		// make sure the config file has the required values
 		if(!configKeyFile.has_group(key_file_group) ||
-			!configKeyFile.has_key(key_file_group, "WallpaperName") ||
-			!configKeyFile.has_key(key_file_group, "TimeTwentyFour") ||
-			!configKeyFile.has_key(key_file_group, "ShowDesktopIcons") ||
-			!configKeyFile.has_key(key_file_group, "EnableVideoWallpapers")) {
+			!configKeyFile.has_key(key_file_group, "WallpaperName")) {
 			
 			print("[WARNING]: invalid configuration file found. Fixing..\n");
 			updateConfigurationFile();
 			return;
 		}
 
-
 		wallpaperName = configKeyFile.get_string (key_file_group, "WallpaperName");
-		timeTwentyFour = configKeyFile.get_boolean (key_file_group, "TimeTwentyFour");
-		showDesktopIcons = configKeyFile.get_boolean (key_file_group, "ShowDesktopIcons");
-		enableVideoWallpapers = configKeyFile.get_boolean (key_file_group, "EnableVideoWallpapers");
-		fixConflicts();
+		//  fixConflicts();
 	}
 
 	/* Updates the .prop file */
@@ -216,9 +141,6 @@ namespace Komorebi.Utilities {
 		var key_file_group = "KomorebiProperties";
 
 		configKeyFile.set_string  (key_file_group, "WallpaperName", wallpaperName);
-		configKeyFile.set_boolean (key_file_group, "TimeTwentyFour", timeTwentyFour);
-		configKeyFile.set_boolean (key_file_group, "ShowDesktopIcons", showDesktopIcons);
-		configKeyFile.set_boolean (key_file_group, "EnableVideoWallpapers", enableVideoWallpapers);
 
 		// Delete the file
 		if(configFile.query_exists())
@@ -232,21 +154,21 @@ namespace Komorebi.Utilities {
 	}
 
 	/* Fixes conflicts with other environmnets */
-	void fixConflicts() {
+	//  void fixConflicts() {
 
 		// Disable/Enabled nautilus to fix bug when clicking on another monitor
-		new GLib.Settings("org.gnome.desktop.background").set_boolean("show-desktop-icons", false);
+		//  new GLib.Settings("org.gnome.desktop.background").set_boolean("show-desktop-icons", false);
 
-		// Check if we have nemo installed
-		SettingsSchemaSource settingsSchemaSource = new SettingsSchemaSource.from_directory ("/usr/share/glib-2.0/schemas", null, false);
-		SettingsSchema settingsSchema = settingsSchemaSource.lookup ("org.nemo.desktop", false);
+		//  // Check if we have nemo installed
+		//  SettingsSchemaSource settingsSchemaSource = new SettingsSchemaSource.from_directory ("/usr/share/glib-2.0/schemas", null, false);
+		//  SettingsSchema settingsSchema = settingsSchemaSource.lookup ("org.nemo.desktop", false);
 
-		if (settingsSchema != null)
-			// Disable/Enable Nemo's desktop icons
-			new GLib.Settings("org.nemo.desktop").set_boolean("show-desktop-icons", false);
+		//  if (settingsSchema != null)
+		//  	// Disable/Enable Nemo's desktop icons
+		//  	new GLib.Settings("org.nemo.desktop").set_boolean("show-desktop-icons", false);
 
 
-	}
+	//  }
 
 	void readWallpaperFile () {
 
@@ -367,12 +289,13 @@ namespace Komorebi.Utilities {
 	/* A dirty way to check if gstreamer is installed */
 	public bool canPlayVideos() {
 
-		if(	File.new_for_path("/usr/lib/gstreamer-1.0/libgstlibav.so").query_exists() ||
-			File.new_for_path("/usr/lib64/gstreamer-1.0/libgstlibav.so").query_exists() ||
-			File.new_for_path("/usr/lib/i386-linux-gnu/gstreamer-1.0/libgstlibav.so").query_exists() ||
-			File.new_for_path("/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so").query_exists())
-			return true;
+		//  if(	File.new_for_path("/usr/lib/gstreamer-1.0/libgstlibav.so").query_exists() ||
+		//  	File.new_for_path("/usr/lib64/gstreamer-1.0/libgstlibav.so").query_exists() ||
+		//  	File.new_for_path("/usr/lib/i386-linux-gnu/gstreamer-1.0/libgstlibav.so").query_exists() ||
+		//  	File.new_for_path("/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so").query_exists())
+		//  	return true;
 
-		return false;
+		//  return false;
+		return true;
 	}
 }

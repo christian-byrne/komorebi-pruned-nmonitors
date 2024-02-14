@@ -29,17 +29,7 @@ vala_precompile(VALA_C
 
     src/OnScreen/BackgroundWindow.vala
     src/OnScreen/DateTimeBox.vala
-    src/OnScreen/DesktopIcons.vala
-    src/OnScreen/ResponsiveGrid.vala
-    src/OnScreen/Icon.vala
-    src/OnScreen/InfoWindow.vala
-    src/OnScreen/RowLabel.vala
-    src/OnScreen/WallpapersSelector.vala
-    src/OnScreen/Thumbnail.vala
-    src/OnScreen/BubbleMenu.vala
-    src/OnScreen/BubbleMenuItem.vala
     src/OnScreen/AssetActor.vala
-    src/OnScreen/PreferencesWindow.vala
 
     src/Utilities.vala
 
@@ -55,34 +45,12 @@ OPTIONS
    	--disable-warnings
 
 )
-vala_precompile(WALLPAPER_CREATOR
-    extra/wallpaper-creator/Main.vala
-
-    extra/wallpaper-creator/OnScreen/NewWallpaperWindow.vala
-    extra/wallpaper-creator/OnScreen/InitialPage.vala
-    extra/wallpaper-creator/OnScreen/OptionsPage.vala
-    extra/wallpaper-creator/OnScreen/FinalPage.vala
-
-
-PACKAGES
-    gee-0.8
-    gtk+-3.0
-    gstreamer-1.0
-    webkit2gtk-4.0
-OPTIONS
-    --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
-    --disable-warnings
-
-)
 
 add_definitions(${CFLAGS} -Wall -Winit-self -Wwrite-strings -Wunreachable-code -Wstrict-prototypes)
 add_executable(komorebi ${VALA_C})
-add_executable(komorebi-wallpaper-creator ${WALLPAPER_CREATOR})
 target_link_libraries(komorebi ${DEPS_LIBRARIES} -lm)
-target_link_libraries(komorebi-wallpaper-creator ${DEPS_LIBRARIES} -lm)
 
 install(TARGETS komorebi RUNTIME DESTINATION /System/Applications/)
-install(TARGETS komorebi-wallpaper-creator RUNTIME DESTINATION /System/Applications/)
 
 
 ######### Wallpapers ############
@@ -97,7 +65,6 @@ install(DIRECTORY data/Icons/ DESTINATION /System/Resources/Komorebi)
 
 ######### Other ############
 install(FILES data/Other/komorebi.desktop DESTINATION /usr/share/applications/)
-install(FILES data/Other/wallpapercreator.desktop DESTINATION /usr/share/applications/)
 
 ######### Run the upgrade script #########
 install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postinst.sh)")
