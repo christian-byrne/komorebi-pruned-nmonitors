@@ -1,3 +1,2 @@
 # Hashes of file build rules.
-dd14938e2ea06a4268c1b1067ad6be52 extra/wallpaper-creator/Main.c
-00e3347ea383c6a69afa13ad47cc8c0f src/Main.c
+6bc4333aadf2830822ff180cc646d30f src/Main.c

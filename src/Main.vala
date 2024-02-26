@@ -38,7 +38,6 @@ public static void main (string [] args) {
         targetMonitor = monitorCount - 1;
     }
 
-    //  initializeClipboard(screen);
     readWallpaperFile();
 
     backgroundWindows = new BackgroundWindow[monitorCount];

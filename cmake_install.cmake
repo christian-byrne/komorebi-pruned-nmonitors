@@ -1,4 +1,4 @@
-# Install script for directory: /home/c_byrne/projects/komorebi-fork/komorebi
+# Install script for directory: /home/c_byrne/projects/komorebi-pruned-nmonitors
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -57,7 +57,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/System/Applications" TYPE EXECUTABLE FILES "/home/c_byrne/projects/komorebi-fork/komorebi/komorebi")
+  file(INSTALL DESTINATION "/System/Applications" TYPE EXECUTABLE FILES "/home/c_byrne/projects/komorebi-pruned-nmonitors/komorebi")
   if(EXISTS "$ENV{DESTDIR}/System/Applications/komorebi" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}/System/Applications/komorebi")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -75,7 +75,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/System/Resources/Komorebi" TYPE DIRECTORY FILES "/home/c_byrne/projects/komorebi-fork/komorebi/data/Wallpapers/")
+  file(INSTALL DESTINATION "/System/Resources/Komorebi" TYPE DIRECTORY FILES "/home/c_byrne/projects/komorebi-pruned-nmonitors/data/Wallpapers/")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -87,7 +87,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/usr/share/fonts" TYPE DIRECTORY FILES "/home/c_byrne/projects/komorebi-fork/komorebi/data/Fonts/")
+  file(INSTALL DESTINATION "/usr/share/fonts" TYPE DIRECTORY FILES "/home/c_byrne/projects/komorebi-pruned-nmonitors/data/Fonts/")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -99,7 +99,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/System/Resources/Komorebi" TYPE DIRECTORY FILES "/home/c_byrne/projects/komorebi-fork/komorebi/data/Icons/")
+  file(INSTALL DESTINATION "/System/Resources/Komorebi" TYPE DIRECTORY FILES "/home/c_byrne/projects/komorebi-pruned-nmonitors/data/Icons/")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -111,11 +111,11 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/usr/share/applications" TYPE FILE FILES "/home/c_byrne/projects/komorebi-fork/komorebi/data/Other/komorebi.desktop")
+  file(INSTALL DESTINATION "/usr/share/applications" TYPE FILE FILES "/home/c_byrne/projects/komorebi-pruned-nmonitors/data/Other/komorebi.desktop")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  execute_process(COMMAND /home/c_byrne/projects/komorebi-fork/komorebi/data/Other/postinst.sh)
+  execute_process(COMMAND /home/c_byrne/projects/komorebi-pruned-nmonitors/data/Other/postinst.sh)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -126,5 +126,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/c_byrne/projects/komorebi-fork/komorebi/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/c_byrne/projects/komorebi-pruned-nmonitors/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

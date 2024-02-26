@@ -1,5 +1,5 @@
 CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o: \
- /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/AssetActor.c \
+ /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/AssetActor.c \
  /usr/include/stdc-predef.h /usr/include/clutter-1.0/clutter/clutter.h \
  /usr/include/clutter-1.0/clutter/clutter-config.h \
  /usr/include/glib-2.0/glib.h /usr/include/glib-2.0/glib/galloca.h \

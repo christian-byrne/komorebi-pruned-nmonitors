@@ -23,6 +23,8 @@
 #define _g_object_unref0(var) ((var == NULL) ? NULL : (var = (g_object_unref (var), NULL)))
 #define _g_free0(var) (var = (g_free (var), NULL))
 #define _g_key_file_unref0(var) ((var == NULL) ? NULL : (var = (g_key_file_unref (var), NULL)))
+#define _g_settings_schema_unref0(var) ((var == NULL) ? NULL : (var = (g_settings_schema_unref (var), NULL)))
+#define _g_settings_schema_source_unref0(var) ((var == NULL) ? NULL : (var = (g_settings_schema_source_unref (var), NULL)))
 
 VALA_EXTERN gchar* komorebi_utilities_desktopPath;
 gchar* komorebi_utilities_desktopPath = NULL;
@@ -112,6 +114,7 @@ VALA_EXTERN void komorebi_utilities_addAlpha (GtkWidget** widgets,
 VALA_EXTERN gchar* komorebi_utilities_formatDateTime (GDateTime* dateTime);
 VALA_EXTERN void komorebi_utilities_readConfigurationFile (gint monitorNumber);
 VALA_EXTERN void komorebi_utilities_updateConfigurationFile (void);
+VALA_EXTERN void komorebi_utilities_fixConflicts (void);
 VALA_EXTERN void komorebi_utilities_readWallpaperFile (void);
 VALA_EXTERN void komorebi_utilities_createNewFolder (const gchar* name,
                                          gint number);
@@ -348,6 +351,7 @@ komorebi_utilities_readConfigurationFile (gint monitorNumber)
 	_tmp25_ = NULL;
 	_g_free0 (komorebi_on_screen_wallpaperName);
 	komorebi_on_screen_wallpaperName = _tmp29_;
+	komorebi_utilities_fixConflicts ();
 	_g_free0 (_tmp25_);
 	_g_free0 (key_file_group);
 }
@@ -428,6 +432,43 @@ komorebi_utilities_updateConfigurationFile (void)
 	_g_object_unref0 (stream);
 	_g_object_unref0 (_tmp6_);
 	_g_free0 (key_file_group);
+}
+
+void
+komorebi_utilities_fixConflicts (void)
+{
+	GSettings* _tmp0_;
+	GSettings* _tmp1_;
+	GSettingsSchemaSource* settingsSchemaSource = NULL;
+	GSettingsSchemaSource* _tmp2_;
+	GSettingsSchema* settingsSchema = NULL;
+	GSettingsSchema* _tmp3_;
+	GSettingsSchema* _tmp4_;
+	GError* _inner_error0_ = NULL;
+	_tmp0_ = g_settings_new ("org.gnome.desktop.background");
+	_tmp1_ = _tmp0_;
+	g_settings_set_boolean (_tmp1_, "show-desktop-icons", FALSE);
+	_g_object_unref0 (_tmp1_);
+	_tmp2_ = g_settings_schema_source_new_from_directory ("/usr/share/glib-2.0/schemas", NULL, FALSE, &_inner_error0_);
+	settingsSchemaSource = _tmp2_;
+	if (G_UNLIKELY (_inner_error0_ != NULL)) {
+		g_critical ("file %s: line %d: uncaught error: %s (%s, %d)", __FILE__, __LINE__, _inner_error0_->message, g_quark_to_string (_inner_error0_->domain), _inner_error0_->code);
+		g_clear_error (&_inner_error0_);
+		return;
+	}
+	_tmp3_ = g_settings_schema_source_lookup (settingsSchemaSource, "org.nemo.desktop", FALSE);
+	settingsSchema = _tmp3_;
+	_tmp4_ = settingsSchema;
+	if (_tmp4_ != NULL) {
+		GSettings* _tmp5_;
+		GSettings* _tmp6_;
+		_tmp5_ = g_settings_new ("org.nemo.desktop");
+		_tmp6_ = _tmp5_;
+		g_settings_set_boolean (_tmp6_, "show-desktop-icons", FALSE);
+		_g_object_unref0 (_tmp6_);
+	}
+	_g_settings_schema_unref0 (settingsSchema);
+	_g_settings_schema_source_unref0 (settingsSchemaSource);
 }
 
 static const gchar*

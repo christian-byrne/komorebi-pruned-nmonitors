@@ -1,5 +1,5 @@
 CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o: \
- /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/BackgroundWindow.c \
+ /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/BackgroundWindow.c \
  /usr/include/stdc-predef.h /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \

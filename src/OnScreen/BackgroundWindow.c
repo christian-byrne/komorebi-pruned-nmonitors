@@ -11,9 +11,10 @@
 #include <clutter/clutter.h>
 #include <clutter-gst/clutter-gst.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
 #include <float.h>
 #include <math.h>
-#include <gdk/gdk.h>
+#include <stdio.h>
 #include <cairo-gobject.h>
 #include <cogl/cogl.h>
 
@@ -100,10 +101,10 @@ VALA_EXTERN gint komorebi_utilities_screenHeight;
 VALA_EXTERN gchar* komorebi_utilities_desktopPath;
 VALA_EXTERN gboolean komorebi_utilities_dateTimeVisible;
 VALA_EXTERN gchar* komorebi_utilities_wallpaperType;
+VALA_EXTERN gchar* komorebi_utilities_videoFileName;
 VALA_EXTERN gboolean komorebi_utilities_dateTimeAlwaysOnTop;
 VALA_EXTERN gboolean komorebi_utilities_assetVisible;
 VALA_EXTERN gboolean komorebi_utilities_wallpaperParallax;
-VALA_EXTERN gchar* komorebi_utilities_videoFileName;
 VALA_EXTERN gchar* komorebi_utilities_webPageUrl;
 
 VALA_EXTERN GType komorebi_on_screen_background_window_get_type (void) G_GNUC_CONST ;
@@ -125,21 +126,25 @@ VALA_EXTERN KomorebiOnScreenAssetActor* komorebi_on_screen_asset_actor_construct
 VALA_EXTERN KomorebiOnScreenDateTimeBox* komorebi_on_screen_date_time_box_new (KomorebiOnScreenBackgroundWindow* parent);
 VALA_EXTERN KomorebiOnScreenDateTimeBox* komorebi_on_screen_date_time_box_construct (GType object_type,
                                                                          KomorebiOnScreenBackgroundWindow* parent);
-static void __lambda7_ (KomorebiOnScreenBackgroundWindow* self);
-static void ___lambda7__g_object_notify (GObject* _sender,
-                                  GParamSpec* pspec,
-                                  gpointer self);
 VALA_EXTERN ClutterActor* komorebi_on_screen_background_window_get_mainActor (KomorebiOnScreenBackgroundWindow* self);
 VALA_EXTERN void komorebi_on_screen_background_window_initializeConfigFile (KomorebiOnScreenBackgroundWindow* self);
+static void ___lambda7_ (KomorebiOnScreenBackgroundWindow* self);
+static void ____lambda7__clutter_gst_player_eos (ClutterGstPlayer* _sender,
+                                          gpointer self);
+static void ___lambda8_ (KomorebiOnScreenBackgroundWindow* self,
+                  GError* _error_);
+static void ____lambda8__clutter_gst_player_error (ClutterGstPlayer* _sender,
+                                            GError* _error_,
+                                            gpointer self);
 static void komorebi_on_screen_background_window_setWallpaper (KomorebiOnScreenBackgroundWindow* self);
 VALA_EXTERN void komorebi_on_screen_date_time_box_setDateTime (KomorebiOnScreenDateTimeBox* self);
-VALA_EXTERN void komorebi_on_screen_date_time_box_fadeOut (KomorebiOnScreenDateTimeBox* self);
 VALA_EXTERN void komorebi_on_screen_asset_actor_setAsset (KomorebiOnScreenAssetActor* self);
 VALA_EXTERN gboolean komorebi_on_screen_asset_actor_shouldAnimate (KomorebiOnScreenAssetActor* self);
 VALA_EXTERN void komorebi_on_screen_background_window_wallpaperFromUrl (KomorebiOnScreenBackgroundWindow* self,
                                                             gchar* url);
 VALA_EXTERN void komorebi_on_screen_background_window_fadeIn (KomorebiOnScreenBackgroundWindow* self);
-VALA_EXTERN void komorebi_on_screen_date_time_box_setPosition (KomorebiOnScreenDateTimeBox* self);
+VALA_EXTERN void komorebi_on_screen_date_time_box_fadeIn (KomorebiOnScreenDateTimeBox* self,
+                                              gint custom_duration);
 VALA_EXTERN gboolean komorebi_on_screen_background_window_contains_point (KomorebiOnScreenBackgroundWindow* self,
                                                               gint x,
                                                               gint y);
@@ -161,38 +166,92 @@ komorebi_on_screen_background_window_get_instance_private (KomorebiOnScreenBackg
 }
 
 static void
-__lambda7_ (KomorebiOnScreenBackgroundWindow* self)
+___lambda7_ (KomorebiOnScreenBackgroundWindow* self)
 {
-	gboolean _tmp0_ = FALSE;
+	ClutterGstPlayback* _tmp0_;
 	ClutterGstPlayback* _tmp1_;
-	gdouble _tmp2_;
-	gdouble _tmp3_;
+	_tmp0_ = self->priv->videoPlayback;
+	clutter_gst_playback_set_progress (_tmp0_, 0.0);
 	_tmp1_ = self->priv->videoPlayback;
-	_tmp2_ = clutter_gst_playback_get_progress (_tmp1_);
-	_tmp3_ = _tmp2_;
-	if (_tmp3_ >= 1.0) {
-		const gchar* _tmp4_;
-		_tmp4_ = komorebi_utilities_wallpaperType;
-		_tmp0_ = g_strcmp0 (_tmp4_, "video") == 0;
-	} else {
-		_tmp0_ = FALSE;
-	}
-	if (_tmp0_) {
-		ClutterGstPlayback* _tmp5_;
-		ClutterGstPlayback* _tmp6_;
-		_tmp5_ = self->priv->videoPlayback;
-		clutter_gst_playback_set_progress (_tmp5_, 0.0);
-		_tmp6_ = self->priv->videoPlayback;
-		clutter_gst_player_set_playing ((ClutterGstPlayer*) _tmp6_, TRUE);
-	}
+	clutter_gst_player_set_playing ((ClutterGstPlayer*) _tmp1_, TRUE);
 }
 
 static void
-___lambda7__g_object_notify (GObject* _sender,
-                             GParamSpec* pspec,
-                             gpointer self)
+____lambda7__clutter_gst_player_eos (ClutterGstPlayer* _sender,
+                                     gpointer self)
 {
-	__lambda7_ ((KomorebiOnScreenBackgroundWindow*) self);
+	___lambda7_ ((KomorebiOnScreenBackgroundWindow*) self);
+}
+
+static const gchar*
+string_to_string (const gchar* self)
+{
+	const gchar* result;
+	g_return_val_if_fail (self != NULL, NULL);
+	result = self;
+	return result;
+}
+
+static void
+___lambda8_ (KomorebiOnScreenBackgroundWindow* self,
+             GError* _error_)
+{
+	FILE* _tmp0_;
+	ClutterGstPlayback* _tmp1_;
+	gchar* videoPath = NULL;
+	const gchar* _tmp2_;
+	const gchar* _tmp3_;
+	const gchar* _tmp4_;
+	const gchar* _tmp5_;
+	gchar* _tmp6_;
+	ClutterGstPlayback* _tmp7_;
+	ClutterGstPlayback* _tmp8_;
+	ClutterGstPlayback* _tmp9_;
+	ClutterGstContent* _tmp10_;
+	ClutterGstPlayback* _tmp11_;
+	FILE* _tmp12_;
+	const gchar* _tmp13_;
+	FILE* _tmp14_;
+	FILE* _tmp15_;
+	g_return_if_fail (_error_ != NULL);
+	_tmp0_ = stdout;
+	fprintf (_tmp0_, "\nError occurred:\n");
+	_g_object_unref0 (self->priv->videoPlayback);
+	self->priv->videoPlayback = NULL;
+	_tmp1_ = clutter_gst_playback_new ();
+	_g_object_unref0 (self->priv->videoPlayback);
+	self->priv->videoPlayback = _tmp1_;
+	_tmp2_ = komorebi_on_screen_wallpaperName;
+	_tmp3_ = string_to_string (_tmp2_);
+	_tmp4_ = komorebi_utilities_videoFileName;
+	_tmp5_ = string_to_string (_tmp4_);
+	_tmp6_ = g_strconcat ("file:///System/Resources/Komorebi/", _tmp3_, "/", _tmp5_, NULL);
+	videoPath = _tmp6_;
+	_tmp7_ = self->priv->videoPlayback;
+	clutter_gst_playback_set_uri (_tmp7_, videoPath);
+	_tmp8_ = self->priv->videoPlayback;
+	clutter_gst_player_set_audio_volume ((ClutterGstPlayer*) _tmp8_, 0.0);
+	_tmp9_ = self->priv->videoPlayback;
+	clutter_gst_player_set_playing ((ClutterGstPlayer*) _tmp9_, TRUE);
+	_tmp10_ = self->priv->videoContent;
+	_tmp11_ = self->priv->videoPlayback;
+	clutter_gst_content_set_player (_tmp10_, (GObject*) _tmp11_);
+	_tmp12_ = stdout;
+	_tmp13_ = _error_->message;
+	fprintf (_tmp12_, "Message: %s\n", _tmp13_);
+	_tmp14_ = stdout;
+	fprintf (_tmp14_, "Domain: %" G_GUINT32_FORMAT "\n", _error_->domain);
+	_tmp15_ = stdout;
+	fprintf (_tmp15_, "Code: %d\n", _error_->code);
+	_g_free0 (videoPath);
+}
+
+static void
+____lambda8__clutter_gst_player_error (ClutterGstPlayer* _sender,
+                                       GError* _error_,
+                                       gpointer self)
+{
+	___lambda8_ ((KomorebiOnScreenBackgroundWindow*) self, _error_);
 }
 
 KomorebiOnScreenBackgroundWindow*
@@ -213,20 +272,17 @@ komorebi_on_screen_background_window_construct (GType object_type,
 	ClutterGstContent* _tmp13_;
 	ClutterGstPlayback* _tmp14_;
 	ClutterGstPlayback* _tmp15_;
-	ClutterGstPlayback* _tmp16_;
-	ClutterActor* _tmp17_;
-	ClutterColor _tmp18_ = {0};
-	GtkClutterActor* _tmp19_;
+	ClutterActor* _tmp16_;
+	ClutterColor _tmp17_ = {0};
+	ClutterActor* _tmp18_;
+	KomorebiOnScreenAssetActor* _tmp19_;
 	ClutterActor* _tmp20_;
-	KomorebiOnScreenAssetActor* _tmp21_;
+	ClutterActor* _tmp21_;
 	ClutterActor* _tmp22_;
-	ClutterActor* _tmp23_;
-	ClutterActor* _tmp24_;
-	ClutterActor* _tmp25_;
-	KomorebiOnScreenDateTimeBox* _tmp26_;
-	ClutterActor* _tmp27_;
-	KomorebiOnScreenAssetActor* _tmp28_;
-	GtkClutterEmbed* _tmp29_;
+	ClutterActor* _tmp29_;
+	KomorebiOnScreenAssetActor* _tmp30_;
+	GtkClutterEmbed* _tmp31_;
+	const gchar* _tmp32_;
 	self = (KomorebiOnScreenBackgroundWindow*) g_object_new (object_type, NULL);
 	gtk_window_set_title ((GtkWindow*) self, "Desktop");
 	komorebi_on_screen_background_window_getMonitorSize (self, monitorIndex);
@@ -277,14 +333,12 @@ komorebi_on_screen_background_window_construct (GType object_type,
 	_g_object_unref0 (self->priv->videoContent);
 	self->priv->videoContent = _tmp11_;
 	_tmp12_ = self->priv->videoPlayback;
-	clutter_gst_playback_set_seek_flags (_tmp12_, CLUTTER_GST_SEEK_FLAG_ACCURATE);
+	clutter_gst_playback_set_seek_flags (_tmp12_, CLUTTER_GST_SEEK_FLAG_NONE);
 	_tmp13_ = self->priv->videoContent;
 	_tmp14_ = self->priv->videoPlayback;
 	clutter_gst_content_set_player (_tmp13_, (GObject*) _tmp14_);
 	_tmp15_ = self->priv->videoPlayback;
 	clutter_gst_player_set_audio_volume ((ClutterGstPlayer*) _tmp15_, 0.0);
-	_tmp16_ = self->priv->videoPlayback;
-	g_signal_connect_object ((GObject*) _tmp16_, "notify::progress", (GCallback) ___lambda7__g_object_notify, self, 0);
 	gtk_widget_set_size_request ((GtkWidget*) self, komorebi_utilities_screenWidth, komorebi_utilities_screenHeight);
 	gtk_window_set_resizable ((GtkWindow*) self, FALSE);
 	gtk_window_set_type_hint ((GtkWindow*) self, GDK_WINDOW_TYPE_HINT_DESKTOP);
@@ -295,29 +349,53 @@ komorebi_on_screen_background_window_construct (GType object_type,
 	gtk_window_set_accept_focus ((GtkWindow*) self, TRUE);
 	gtk_window_stick ((GtkWindow*) self);
 	gtk_window_set_decorated ((GtkWindow*) self, FALSE);
-	_tmp17_ = self->priv->_mainActor;
-	clutter_color_from_string (&_tmp18_, "black");
-	clutter_actor_set_background_color (_tmp17_, &_tmp18_);
-	_tmp19_ = self->priv->webViewActor;
+	_tmp16_ = self->priv->_mainActor;
+	clutter_color_from_string (&_tmp17_, "black");
+	clutter_actor_set_background_color (_tmp16_, &_tmp17_);
+	_tmp18_ = self->priv->wallpaperActor;
+	clutter_actor_set_size (_tmp18_, (gfloat) komorebi_utilities_screenWidth, (gfloat) komorebi_utilities_screenHeight);
+	_tmp19_ = self->priv->assetActor;
 	clutter_actor_set_size ((ClutterActor*) _tmp19_, (gfloat) komorebi_utilities_screenWidth, (gfloat) komorebi_utilities_screenHeight);
 	_tmp20_ = self->priv->wallpaperActor;
-	clutter_actor_set_size (_tmp20_, (gfloat) komorebi_utilities_screenWidth, (gfloat) komorebi_utilities_screenHeight);
-	_tmp21_ = self->priv->assetActor;
-	clutter_actor_set_size ((ClutterActor*) _tmp21_, (gfloat) komorebi_utilities_screenWidth, (gfloat) komorebi_utilities_screenHeight);
+	clutter_actor_set_pivot_point (_tmp20_, 0.5f, 0.5f);
+	_tmp21_ = self->priv->_mainActor;
 	_tmp22_ = self->priv->wallpaperActor;
-	clutter_actor_set_pivot_point (_tmp22_, 0.5f, 0.5f);
-	_tmp23_ = self->priv->_mainActor;
-	_tmp24_ = self->priv->wallpaperActor;
-	clutter_actor_add_child (_tmp23_, _tmp24_);
-	_tmp25_ = self->priv->_mainActor;
-	_tmp26_ = self->priv->dateTimeBox;
-	clutter_actor_add_child (_tmp25_, (ClutterActor*) _tmp26_);
-	_tmp27_ = self->priv->_mainActor;
-	_tmp28_ = self->priv->assetActor;
-	clutter_actor_add_child (_tmp27_, (ClutterActor*) _tmp28_);
-	_tmp29_ = self->priv->embed;
-	gtk_container_add ((GtkContainer*) self, (GtkWidget*) _tmp29_);
+	clutter_actor_add_child (_tmp21_, _tmp22_);
+	if (komorebi_utilities_dateTimeVisible) {
+		ClutterActor* _tmp23_;
+		KomorebiOnScreenDateTimeBox* _tmp24_;
+		_tmp23_ = self->priv->_mainActor;
+		_tmp24_ = self->priv->dateTimeBox;
+		clutter_actor_add_child (_tmp23_, (ClutterActor*) _tmp24_);
+	} else {
+		const gchar* _tmp25_;
+		_tmp25_ = komorebi_utilities_wallpaperType;
+		if (g_strcmp0 (_tmp25_, "web_page") == 0) {
+			GtkClutterActor* _tmp26_;
+			ClutterActor* _tmp27_;
+			GtkClutterActor* _tmp28_;
+			_tmp26_ = self->priv->webViewActor;
+			clutter_actor_set_size ((ClutterActor*) _tmp26_, (gfloat) komorebi_utilities_screenWidth, (gfloat) komorebi_utilities_screenHeight);
+			_tmp27_ = self->priv->_mainActor;
+			_tmp28_ = self->priv->webViewActor;
+			clutter_actor_add_child (_tmp27_, (ClutterActor*) _tmp28_);
+		}
+	}
+	_tmp29_ = self->priv->_mainActor;
+	_tmp30_ = self->priv->assetActor;
+	clutter_actor_add_child (_tmp29_, (ClutterActor*) _tmp30_);
+	_tmp31_ = self->priv->embed;
+	gtk_container_add ((GtkContainer*) self, (GtkWidget*) _tmp31_);
 	komorebi_on_screen_background_window_initializeConfigFile (self);
+	_tmp32_ = komorebi_utilities_wallpaperType;
+	if (g_strcmp0 (_tmp32_, "video") == 0) {
+		ClutterGstPlayback* _tmp33_;
+		ClutterGstPlayback* _tmp34_;
+		_tmp33_ = self->priv->videoPlayback;
+		g_signal_connect_object ((ClutterGstPlayer*) _tmp33_, "eos", (GCallback) ____lambda7__clutter_gst_player_eos, self, 0);
+		_tmp34_ = self->priv->videoPlayback;
+		g_signal_connect_object ((ClutterGstPlayer*) _tmp34_, "error", (GCallback) ____lambda8__clutter_gst_player_error, self, 0);
+	}
 	return self;
 }
 
@@ -365,9 +443,9 @@ komorebi_on_screen_background_window_getMonitorSize (KomorebiOnScreenBackgroundW
 void
 komorebi_on_screen_background_window_initializeConfigFile (KomorebiOnScreenBackgroundWindow* self)
 {
+	gboolean _tmp7_ = FALSE;
 	gboolean _tmp8_ = FALSE;
-	gboolean _tmp9_ = FALSE;
-	const gchar* _tmp10_;
+	const gchar* _tmp9_;
 	g_return_if_fail (self != NULL);
 	komorebi_on_screen_background_window_setWallpaper (self);
 	if (komorebi_utilities_dateTimeVisible) {
@@ -391,42 +469,29 @@ komorebi_on_screen_background_window_initializeConfigFile (KomorebiOnScreenBackg
 		}
 		_tmp6_ = self->priv->dateTimeBox;
 		komorebi_on_screen_date_time_box_setDateTime (_tmp6_);
-	} else {
-		KomorebiOnScreenDateTimeBox* _tmp7_;
-		_tmp7_ = self->priv->dateTimeBox;
-		komorebi_on_screen_date_time_box_fadeOut (_tmp7_);
 	}
-	_tmp10_ = komorebi_utilities_wallpaperType;
-	if (g_strcmp0 (_tmp10_, "video") != 0) {
-		const gchar* _tmp11_;
-		_tmp11_ = komorebi_utilities_wallpaperType;
-		_tmp9_ = g_strcmp0 (_tmp11_, "web_page") != 0;
-	} else {
-		_tmp9_ = FALSE;
-	}
-	if (_tmp9_) {
-		_tmp8_ = komorebi_utilities_assetVisible;
+	_tmp9_ = komorebi_utilities_wallpaperType;
+	if (g_strcmp0 (_tmp9_, "video") != 0) {
+		const gchar* _tmp10_;
+		_tmp10_ = komorebi_utilities_wallpaperType;
+		_tmp8_ = g_strcmp0 (_tmp10_, "web_page") != 0;
 	} else {
 		_tmp8_ = FALSE;
 	}
 	if (_tmp8_) {
+		_tmp7_ = komorebi_utilities_assetVisible;
+	} else {
+		_tmp7_ = FALSE;
+	}
+	if (_tmp7_) {
+		KomorebiOnScreenAssetActor* _tmp11_;
+		_tmp11_ = self->priv->assetActor;
+		komorebi_on_screen_asset_actor_setAsset (_tmp11_);
+	} else {
 		KomorebiOnScreenAssetActor* _tmp12_;
 		_tmp12_ = self->priv->assetActor;
-		komorebi_on_screen_asset_actor_setAsset (_tmp12_);
-	} else {
-		KomorebiOnScreenAssetActor* _tmp13_;
-		_tmp13_ = self->priv->assetActor;
-		komorebi_on_screen_asset_actor_shouldAnimate (_tmp13_);
+		komorebi_on_screen_asset_actor_shouldAnimate (_tmp12_);
 	}
-}
-
-static const gchar*
-string_to_string (const gchar* self)
-{
-	const gchar* result;
-	g_return_val_if_fail (self != NULL, NULL);
-	result = self;
-	return result;
 }
 
 static void
@@ -702,11 +767,13 @@ komorebi_on_screen_background_window_wallpaperFromUrl (KomorebiOnScreenBackgroun
 void
 komorebi_on_screen_background_window_fadeIn (KomorebiOnScreenBackgroundWindow* self)
 {
-	KomorebiOnScreenDateTimeBox* _tmp0_;
 	g_return_if_fail (self != NULL);
 	gtk_widget_show_all ((GtkWidget*) self);
-	_tmp0_ = self->priv->dateTimeBox;
-	komorebi_on_screen_date_time_box_setPosition (_tmp0_);
+	if (komorebi_utilities_dateTimeVisible) {
+		KomorebiOnScreenDateTimeBox* _tmp0_;
+		_tmp0_ = self->priv->dateTimeBox;
+		komorebi_on_screen_date_time_box_fadeIn (_tmp0_, 90);
+	}
 }
 
 gboolean

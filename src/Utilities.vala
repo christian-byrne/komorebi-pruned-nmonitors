@@ -132,7 +132,7 @@ namespace Komorebi.Utilities {
 		}
 
 		wallpaperName = configKeyFile.get_string (key_file_group, "WallpaperName");
-		//  fixConflicts();
+		fixConflicts();
 	}
 
 	/* Updates the .prop file */
@@ -154,21 +154,21 @@ namespace Komorebi.Utilities {
 	}
 
 	/* Fixes conflicts with other environmnets */
-	//  void fixConflicts() {
+	void fixConflicts() {
 
-		// Disable/Enabled nautilus to fix bug when clicking on another monitor
-		//  new GLib.Settings("org.gnome.desktop.background").set_boolean("show-desktop-icons", false);
+		//  Disable/Enabled nautilus to fix bug when clicking on another monitor
+		new GLib.Settings("org.gnome.desktop.background").set_boolean("show-desktop-icons", false);
 
-		//  // Check if we have nemo installed
-		//  SettingsSchemaSource settingsSchemaSource = new SettingsSchemaSource.from_directory ("/usr/share/glib-2.0/schemas", null, false);
-		//  SettingsSchema settingsSchema = settingsSchemaSource.lookup ("org.nemo.desktop", false);
+		// Check if we have nemo installed
+		SettingsSchemaSource settingsSchemaSource = new SettingsSchemaSource.from_directory ("/usr/share/glib-2.0/schemas", null, false);
+		SettingsSchema settingsSchema = settingsSchemaSource.lookup ("org.nemo.desktop", false);
 
-		//  if (settingsSchema != null)
-		//  	// Disable/Enable Nemo's desktop icons
-		//  	new GLib.Settings("org.nemo.desktop").set_boolean("show-desktop-icons", false);
+		if (settingsSchema != null)
+			// Disable/Enable Nemo's desktop icons
+			new GLib.Settings("org.nemo.desktop").set_boolean("show-desktop-icons", false);
 
 
-	//  }
+	}
 
 	void readWallpaperFile () {
 

@@ -1,6 +1,7 @@
 using Gtk;
 using Gdk;
 using Gst;
+using GLib;
 using WebKit;
 
 using Komorebi.Utilities;
@@ -39,11 +40,6 @@ namespace Komorebi.OnScreen {
 		// Current animation mode
 		bool dateTimeBoxParallax = false;
 
-		//  const TargetEntry[] targets = {
-		//  	{ "text/uri-list", 0, 0}
-		//  };
-
-
 		public BackgroundWindow (int monitorIndex) {
 
 			title = "Desktop";
@@ -70,21 +66,12 @@ namespace Komorebi.OnScreen {
 				webViewActor = null;
 			}
 
-				videoPlayback = new ClutterGst.Playback ();
-				videoContent = new ClutterGst.Content();
-				videoPlayback.set_seek_flags (ClutterGst.SeekFlags.ACCURATE);
-				videoContent.player = videoPlayback;
-				videoPlayback.set_audio_volume(0.0);
-
-				videoPlayback.notify["progress"].connect(() => {
-
-					if(videoPlayback.progress >= 1.0 && wallpaperType == "video") {
-						videoPlayback.progress = 0.0;
-						videoPlayback.playing = true;
-					}
-
-				});
-
+			videoPlayback = new ClutterGst.Playback ();
+			videoContent = new ClutterGst.Content ();
+			// Fast seeks (key frame boundaries, default)
+			videoPlayback.set_seek_flags (ClutterGst.SeekFlags.NONE);
+			videoContent.player = videoPlayback;
+			videoPlayback.set_audio_volume(0.0);
 
 			// Setup widgets
 			set_size_request(screenWidth, screenHeight);
@@ -100,22 +87,55 @@ namespace Komorebi.OnScreen {
 
 			mainActor.background_color = Clutter.Color.from_string("black");
 
-			webViewActor.set_size(screenWidth, screenHeight);
 			wallpaperActor.set_size(screenWidth, screenHeight);
 			assetActor.set_size(screenWidth, screenHeight);
 			wallpaperActor.set_pivot_point (0.5f, 0.5f);
 
 			// Add widgets
 			mainActor.add_child(wallpaperActor);
-			mainActor.add_child(dateTimeBox);
+			if (dateTimeVisible) {
+				mainActor.add_child(dateTimeBox);
+			}
+			else if (wallpaperType == "web_page") {
+			webViewActor.set_size(screenWidth, screenHeight);
+				mainActor.add_child(webViewActor);
+			}
 			mainActor.add_child(assetActor);
 
 			// add the widgets
 			add(embed);
 
+			// Don't get duration constant until the video is started (in initializeConfigFile())
 			initializeConfigFile(); 
-			//  signalsSetup();
+			if (wallpaperType == "video") {
 
+				// [UPDATE] Switch to listening for eos signal (end of stream)
+				videoPlayback.eos.connect(() => {
+					// This code block will be executed when the "eos" signal is emitted
+					// Set the playback progress to the beginning and restart playback
+					videoPlayback.set_progress(0.0);
+					videoPlayback.set_playing(true);
+				});
+
+				// [UPDATE] Connect a callback function to the "error" signal
+				videoPlayback.error.connect((error) => {
+					// This code block will be executed when the "error" signal is emitted
+					stdout.printf("\nError occurred:\n");
+					// Flush and recreate the Playback object
+					videoPlayback = null;
+					videoPlayback = new ClutterGst.Playback();
+					var videoPath = @"file:///System/Resources/Komorebi/$wallpaperName/$videoFileName";
+					videoPlayback.uri = videoPath;
+					videoPlayback.set_audio_volume(0.0);
+					videoPlayback.set_playing(true);
+					videoContent.player = videoPlayback;
+
+					// Prettify and log the properties of the Error object
+					stdout.printf("Message: %s\n", error.message);
+					stdout.printf("Domain: %" + uint32.FORMAT + "\n", error.domain);
+					stdout.printf("Code: %d\n", error.code);
+				});
+			}
 		}
 
 		void getMonitorSize(int monitorIndex) {
@@ -146,8 +166,7 @@ namespace Komorebi.OnScreen {
 				
 				dateTimeBox.setDateTime();
 
-			} else
-				dateTimeBox.fadeOut();
+			} 
 
 			if((wallpaperType != "video" && wallpaperType != "web_page") && assetVisible)
 				assetActor.setAsset();
@@ -227,10 +246,10 @@ namespace Komorebi.OnScreen {
 
 		/* Shows the window */
 		public void fadeIn() {
-
 			show_all();
-			dateTimeBox.setPosition();
-
+			if (dateTimeVisible) {
+				dateTimeBox.fadeIn();
+			}
 		}
 
 		public bool contains_point(int x, int y) {

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/c_byrne/projects/komorebi-fork/komorebi
+CMAKE_SOURCE_DIR = /home/c_byrne/projects/komorebi-pruned-nmonitors
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/c_byrne/projects/komorebi-fork/komorebi
+CMAKE_BINARY_DIR = /home/c_byrne/projects/komorebi-pruned-nmonitors
 
 # Include any dependencies generated for this target.
 include CMakeFiles/komorebi.dir/depend.make
@@ -74,8 +74,8 @@ src/Main.c: src/OnScreen/BackgroundWindow.vala
 src/Main.c: src/OnScreen/DateTimeBox.vala
 src/Main.c: src/OnScreen/AssetActor.vala
 src/Main.c: src/Utilities.vala
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/c_byrne/projects/komorebi-fork/komorebi/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating src/Main.c, src/OnScreen/BackgroundWindow.c, src/OnScreen/DateTimeBox.c, src/OnScreen/AssetActor.c, src/Utilities.c"
-	/usr/bin/valac -C -b /home/c_byrne/projects/komorebi-fork/komorebi -d /home/c_byrne/projects/komorebi-fork/komorebi --pkg=gtk+-3.0 --pkg=gee-0.8 --pkg=clutter-gtk-1.0 --pkg=clutter-gst-3.0 --pkg=webkit2gtk-4.0 --vapidir=/home/c_byrne/projects/komorebi-fork/komorebi/vapi/ --disable-warnings /home/c_byrne/projects/komorebi-fork/komorebi/src/Main.vala /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/BackgroundWindow.vala /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/DateTimeBox.vala /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/AssetActor.vala /home/c_byrne/projects/komorebi-fork/komorebi/src/Utilities.vala
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/c_byrne/projects/komorebi-pruned-nmonitors/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating src/Main.c, src/OnScreen/BackgroundWindow.c, src/OnScreen/DateTimeBox.c, src/OnScreen/AssetActor.c, src/Utilities.c"
+	/usr/bin/valac -C -b /home/c_byrne/projects/komorebi-pruned-nmonitors -d /home/c_byrne/projects/komorebi-pruned-nmonitors --pkg=gtk+-3.0 --pkg=gee-0.8 --pkg=clutter-gtk-1.0 --pkg=clutter-gst-3.0 --pkg=webkit2gtk-4.0 --vapidir=/home/c_byrne/projects/komorebi-pruned-nmonitors/vapi/ --disable-warnings /home/c_byrne/projects/komorebi-pruned-nmonitors/src/Main.vala /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/BackgroundWindow.vala /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/DateTimeBox.vala /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/AssetActor.vala /home/c_byrne/projects/komorebi-pruned-nmonitors/src/Utilities.vala
 
 src/OnScreen/BackgroundWindow.c: src/Main.c
 	@$(CMAKE_COMMAND) -E touch_nocreate src/OnScreen/BackgroundWindow.c
@@ -92,72 +92,72 @@ src/Utilities.c: src/Main.c
 CMakeFiles/komorebi.dir/src/Main.c.o: CMakeFiles/komorebi.dir/flags.make
 CMakeFiles/komorebi.dir/src/Main.c.o: src/Main.c
 CMakeFiles/komorebi.dir/src/Main.c.o: CMakeFiles/komorebi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-fork/komorebi/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/komorebi.dir/src/Main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/Main.c.o -MF CMakeFiles/komorebi.dir/src/Main.c.o.d -o CMakeFiles/komorebi.dir/src/Main.c.o -c /home/c_byrne/projects/komorebi-fork/komorebi/src/Main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-pruned-nmonitors/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/komorebi.dir/src/Main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/Main.c.o -MF CMakeFiles/komorebi.dir/src/Main.c.o.d -o CMakeFiles/komorebi.dir/src/Main.c.o -c /home/c_byrne/projects/komorebi-pruned-nmonitors/src/Main.c
 
 CMakeFiles/komorebi.dir/src/Main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/komorebi.dir/src/Main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-fork/komorebi/src/Main.c > CMakeFiles/komorebi.dir/src/Main.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-pruned-nmonitors/src/Main.c > CMakeFiles/komorebi.dir/src/Main.c.i
 
 CMakeFiles/komorebi.dir/src/Main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/komorebi.dir/src/Main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-fork/komorebi/src/Main.c -o CMakeFiles/komorebi.dir/src/Main.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-pruned-nmonitors/src/Main.c -o CMakeFiles/komorebi.dir/src/Main.c.s
 
 CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o: CMakeFiles/komorebi.dir/flags.make
 CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o: src/OnScreen/BackgroundWindow.c
 CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o: CMakeFiles/komorebi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-fork/komorebi/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o -MF CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o.d -o CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o -c /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/BackgroundWindow.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-pruned-nmonitors/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o -MF CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o.d -o CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.o -c /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/BackgroundWindow.c
 
 CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/BackgroundWindow.c > CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/BackgroundWindow.c > CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.i
 
 CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/BackgroundWindow.c -o CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/BackgroundWindow.c -o CMakeFiles/komorebi.dir/src/OnScreen/BackgroundWindow.c.s
 
 CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o: CMakeFiles/komorebi.dir/flags.make
 CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o: src/OnScreen/DateTimeBox.c
 CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o: CMakeFiles/komorebi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-fork/komorebi/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o -MF CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o.d -o CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o -c /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/DateTimeBox.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-pruned-nmonitors/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o -MF CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o.d -o CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.o -c /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/DateTimeBox.c
 
 CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/DateTimeBox.c > CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/DateTimeBox.c > CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.i
 
 CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/DateTimeBox.c -o CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/DateTimeBox.c -o CMakeFiles/komorebi.dir/src/OnScreen/DateTimeBox.c.s
 
 CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o: CMakeFiles/komorebi.dir/flags.make
 CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o: src/OnScreen/AssetActor.c
 CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o: CMakeFiles/komorebi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-fork/komorebi/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o -MF CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o.d -o CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o -c /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/AssetActor.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-pruned-nmonitors/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o -MF CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o.d -o CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o -c /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/AssetActor.c
 
 CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/AssetActor.c > CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/AssetActor.c > CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.i
 
 CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-fork/komorebi/src/OnScreen/AssetActor.c -o CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-pruned-nmonitors/src/OnScreen/AssetActor.c -o CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.s
 
 CMakeFiles/komorebi.dir/src/Utilities.c.o: CMakeFiles/komorebi.dir/flags.make
 CMakeFiles/komorebi.dir/src/Utilities.c.o: src/Utilities.c
 CMakeFiles/komorebi.dir/src/Utilities.c.o: CMakeFiles/komorebi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-fork/komorebi/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/komorebi.dir/src/Utilities.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/Utilities.c.o -MF CMakeFiles/komorebi.dir/src/Utilities.c.o.d -o CMakeFiles/komorebi.dir/src/Utilities.c.o -c /home/c_byrne/projects/komorebi-fork/komorebi/src/Utilities.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/c_byrne/projects/komorebi-pruned-nmonitors/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/komorebi.dir/src/Utilities.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/komorebi.dir/src/Utilities.c.o -MF CMakeFiles/komorebi.dir/src/Utilities.c.o.d -o CMakeFiles/komorebi.dir/src/Utilities.c.o -c /home/c_byrne/projects/komorebi-pruned-nmonitors/src/Utilities.c
 
 CMakeFiles/komorebi.dir/src/Utilities.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/komorebi.dir/src/Utilities.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-fork/komorebi/src/Utilities.c > CMakeFiles/komorebi.dir/src/Utilities.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/c_byrne/projects/komorebi-pruned-nmonitors/src/Utilities.c > CMakeFiles/komorebi.dir/src/Utilities.c.i
 
 CMakeFiles/komorebi.dir/src/Utilities.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/komorebi.dir/src/Utilities.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-fork/komorebi/src/Utilities.c -o CMakeFiles/komorebi.dir/src/Utilities.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/c_byrne/projects/komorebi-pruned-nmonitors/src/Utilities.c -o CMakeFiles/komorebi.dir/src/Utilities.c.s
 
 # Object files for target komorebi
 komorebi_OBJECTS = \
@@ -177,7 +177,7 @@ komorebi: CMakeFiles/komorebi.dir/src/OnScreen/AssetActor.c.o
 komorebi: CMakeFiles/komorebi.dir/src/Utilities.c.o
 komorebi: CMakeFiles/komorebi.dir/build.make
 komorebi: CMakeFiles/komorebi.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/c_byrne/projects/komorebi-fork/komorebi/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable komorebi"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/c_byrne/projects/komorebi-pruned-nmonitors/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable komorebi"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/komorebi.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -193,6 +193,6 @@ CMakeFiles/komorebi.dir/depend: src/OnScreen/AssetActor.c
 CMakeFiles/komorebi.dir/depend: src/OnScreen/BackgroundWindow.c
 CMakeFiles/komorebi.dir/depend: src/OnScreen/DateTimeBox.c
 CMakeFiles/komorebi.dir/depend: src/Utilities.c
-	cd /home/c_byrne/projects/komorebi-fork/komorebi && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/c_byrne/projects/komorebi-fork/komorebi /home/c_byrne/projects/komorebi-fork/komorebi /home/c_byrne/projects/komorebi-fork/komorebi /home/c_byrne/projects/komorebi-fork/komorebi /home/c_byrne/projects/komorebi-fork/komorebi/CMakeFiles/komorebi.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/c_byrne/projects/komorebi-pruned-nmonitors && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/c_byrne/projects/komorebi-pruned-nmonitors /home/c_byrne/projects/komorebi-pruned-nmonitors /home/c_byrne/projects/komorebi-pruned-nmonitors /home/c_byrne/projects/komorebi-pruned-nmonitors /home/c_byrne/projects/komorebi-pruned-nmonitors/CMakeFiles/komorebi.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/komorebi.dir/depend
 
