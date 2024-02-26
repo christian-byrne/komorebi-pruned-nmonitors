@@ -101,10 +101,10 @@ VALA_EXTERN gint komorebi_utilities_screenHeight;
 VALA_EXTERN gchar* komorebi_utilities_desktopPath;
 VALA_EXTERN gboolean komorebi_utilities_dateTimeVisible;
 VALA_EXTERN gchar* komorebi_utilities_wallpaperType;
-VALA_EXTERN gchar* komorebi_utilities_videoFileName;
 VALA_EXTERN gboolean komorebi_utilities_dateTimeAlwaysOnTop;
 VALA_EXTERN gboolean komorebi_utilities_assetVisible;
 VALA_EXTERN gboolean komorebi_utilities_wallpaperParallax;
+VALA_EXTERN gchar* komorebi_utilities_videoFileName;
 VALA_EXTERN gchar* komorebi_utilities_webPageUrl;
 
 VALA_EXTERN GType komorebi_on_screen_background_window_get_type (void) G_GNUC_CONST ;
@@ -170,10 +170,13 @@ ___lambda7_ (KomorebiOnScreenBackgroundWindow* self)
 {
 	ClutterGstPlayback* _tmp0_;
 	ClutterGstPlayback* _tmp1_;
+	ClutterGstPlayback* _tmp2_;
 	_tmp0_ = self->priv->videoPlayback;
-	clutter_gst_playback_set_progress (_tmp0_, 0.0);
+	clutter_gst_player_set_playing ((ClutterGstPlayer*) _tmp0_, FALSE);
 	_tmp1_ = self->priv->videoPlayback;
-	clutter_gst_player_set_playing ((ClutterGstPlayer*) _tmp1_, TRUE);
+	clutter_gst_playback_set_progress (_tmp1_, 0.35);
+	_tmp2_ = self->priv->videoPlayback;
+	clutter_gst_player_set_playing ((ClutterGstPlayer*) _tmp2_, TRUE);
 }
 
 static void
@@ -183,67 +186,34 @@ ____lambda7__clutter_gst_player_eos (ClutterGstPlayer* _sender,
 	___lambda7_ ((KomorebiOnScreenBackgroundWindow*) self);
 }
 
-static const gchar*
-string_to_string (const gchar* self)
-{
-	const gchar* result;
-	g_return_val_if_fail (self != NULL, NULL);
-	result = self;
-	return result;
-}
-
 static void
 ___lambda8_ (KomorebiOnScreenBackgroundWindow* self,
              GError* _error_)
 {
 	FILE* _tmp0_;
 	ClutterGstPlayback* _tmp1_;
-	gchar* videoPath = NULL;
-	const gchar* _tmp2_;
-	const gchar* _tmp3_;
-	const gchar* _tmp4_;
+	ClutterGstPlayback* _tmp2_;
+	ClutterGstPlayback* _tmp3_;
+	FILE* _tmp4_;
 	const gchar* _tmp5_;
-	gchar* _tmp6_;
-	ClutterGstPlayback* _tmp7_;
-	ClutterGstPlayback* _tmp8_;
-	ClutterGstPlayback* _tmp9_;
-	ClutterGstContent* _tmp10_;
-	ClutterGstPlayback* _tmp11_;
-	FILE* _tmp12_;
-	const gchar* _tmp13_;
-	FILE* _tmp14_;
-	FILE* _tmp15_;
+	FILE* _tmp6_;
+	FILE* _tmp7_;
 	g_return_if_fail (_error_ != NULL);
 	_tmp0_ = stdout;
 	fprintf (_tmp0_, "\nError occurred:\n");
-	_g_object_unref0 (self->priv->videoPlayback);
-	self->priv->videoPlayback = NULL;
-	_tmp1_ = clutter_gst_playback_new ();
-	_g_object_unref0 (self->priv->videoPlayback);
-	self->priv->videoPlayback = _tmp1_;
-	_tmp2_ = komorebi_on_screen_wallpaperName;
-	_tmp3_ = string_to_string (_tmp2_);
-	_tmp4_ = komorebi_utilities_videoFileName;
-	_tmp5_ = string_to_string (_tmp4_);
-	_tmp6_ = g_strconcat ("file:///System/Resources/Komorebi/", _tmp3_, "/", _tmp5_, NULL);
-	videoPath = _tmp6_;
-	_tmp7_ = self->priv->videoPlayback;
-	clutter_gst_playback_set_uri (_tmp7_, videoPath);
-	_tmp8_ = self->priv->videoPlayback;
-	clutter_gst_player_set_audio_volume ((ClutterGstPlayer*) _tmp8_, 0.0);
-	_tmp9_ = self->priv->videoPlayback;
-	clutter_gst_player_set_playing ((ClutterGstPlayer*) _tmp9_, TRUE);
-	_tmp10_ = self->priv->videoContent;
-	_tmp11_ = self->priv->videoPlayback;
-	clutter_gst_content_set_player (_tmp10_, (GObject*) _tmp11_);
-	_tmp12_ = stdout;
-	_tmp13_ = _error_->message;
-	fprintf (_tmp12_, "Message: %s\n", _tmp13_);
-	_tmp14_ = stdout;
-	fprintf (_tmp14_, "Domain: %" G_GUINT32_FORMAT "\n", _error_->domain);
-	_tmp15_ = stdout;
-	fprintf (_tmp15_, "Code: %d\n", _error_->code);
-	_g_free0 (videoPath);
+	_tmp1_ = self->priv->videoPlayback;
+	clutter_gst_player_set_playing ((ClutterGstPlayer*) _tmp1_, FALSE);
+	_tmp2_ = self->priv->videoPlayback;
+	clutter_gst_playback_set_progress (_tmp2_, 0.05);
+	_tmp3_ = self->priv->videoPlayback;
+	clutter_gst_player_set_playing ((ClutterGstPlayer*) _tmp3_, TRUE);
+	_tmp4_ = stdout;
+	_tmp5_ = _error_->message;
+	fprintf (_tmp4_, "Message: %s\n", _tmp5_);
+	_tmp6_ = stdout;
+	fprintf (_tmp6_, "Domain: %" G_GUINT32_FORMAT "\n", _error_->domain);
+	_tmp7_ = stdout;
+	fprintf (_tmp7_, "Code: %d\n", _error_->code);
 }
 
 static void
@@ -333,7 +303,7 @@ komorebi_on_screen_background_window_construct (GType object_type,
 	_g_object_unref0 (self->priv->videoContent);
 	self->priv->videoContent = _tmp11_;
 	_tmp12_ = self->priv->videoPlayback;
-	clutter_gst_playback_set_seek_flags (_tmp12_, CLUTTER_GST_SEEK_FLAG_NONE);
+	clutter_gst_playback_set_seek_flags (_tmp12_, CLUTTER_GST_SEEK_FLAG_ACCURATE);
 	_tmp13_ = self->priv->videoContent;
 	_tmp14_ = self->priv->videoPlayback;
 	clutter_gst_content_set_player (_tmp13_, (GObject*) _tmp14_);
@@ -492,6 +462,15 @@ komorebi_on_screen_background_window_initializeConfigFile (KomorebiOnScreenBackg
 		_tmp12_ = self->priv->assetActor;
 		komorebi_on_screen_asset_actor_shouldAnimate (_tmp12_);
 	}
+}
+
+static const gchar*
+string_to_string (const gchar* self)
+{
+	const gchar* result;
+	g_return_val_if_fail (self != NULL, NULL);
+	result = self;
+	return result;
 }
 
 static void

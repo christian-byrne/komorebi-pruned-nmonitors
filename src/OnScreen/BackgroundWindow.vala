@@ -69,7 +69,7 @@ namespace Komorebi.OnScreen {
 			videoPlayback = new ClutterGst.Playback ();
 			videoContent = new ClutterGst.Content ();
 			// Fast seeks (key frame boundaries, default)
-			videoPlayback.set_seek_flags (ClutterGst.SeekFlags.NONE);
+			videoPlayback.set_seek_flags (ClutterGst.SeekFlags.ACCURATE);
 			videoContent.player = videoPlayback;
 			videoPlayback.set_audio_volume(0.0);
 
@@ -113,7 +113,8 @@ namespace Komorebi.OnScreen {
 				videoPlayback.eos.connect(() => {
 					// This code block will be executed when the "eos" signal is emitted
 					// Set the playback progress to the beginning and restart playback
-					videoPlayback.set_progress(0.0);
+					videoPlayback.set_playing(false);
+					videoPlayback.set_progress(0.35);
 					videoPlayback.set_playing(true);
 				});
 
@@ -122,13 +123,15 @@ namespace Komorebi.OnScreen {
 					// This code block will be executed when the "error" signal is emitted
 					stdout.printf("\nError occurred:\n");
 					// Flush and recreate the Playback object
-					videoPlayback = null;
-					videoPlayback = new ClutterGst.Playback();
-					var videoPath = @"file:///System/Resources/Komorebi/$wallpaperName/$videoFileName";
-					videoPlayback.uri = videoPath;
-					videoPlayback.set_audio_volume(0.0);
+					//  videoPlayback = null;
+					//  videoPlayback = new ClutterGst.Playback();
+					//  var videoPath = @"file:///System/Resources/Komorebi/$wallpaperName/$videoFileName";
+					//  videoPlayback.uri = videoPath;
+					//  videoPlayback.set_audio_volume(0.0);
+					//  videoContent.player = videoPlayback;
+					videoPlayback.set_playing(false);
+					videoPlayback.set_progress(0.05);
 					videoPlayback.set_playing(true);
-					videoContent.player = videoPlayback;
 
 					// Prettify and log the properties of the Error object
 					stdout.printf("Message: %s\n", error.message);

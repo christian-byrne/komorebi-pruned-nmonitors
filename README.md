@@ -3,11 +3,11 @@ Komorebi Fork
 
 ### Performance
 
-- Fixed the issue causing crashes/hangups at 100% core usage by changing signal listeners and adding error handling callback to Player object
+- Tried to fix the issue causing crashes/hangups at 100% core usage by changing signal listeners and adding error handling callback to Player object
 - Performance improvements
   - Listen for end-of-stream signal instead of listening to progress change and running check if video ended every frame
-  - Listen to playback error signal and log erros then release the object and create a new one
-  - Switch to keyframe based seeking instead of frame based seeking
+  - Listen to playback error signal and log erros then try to fix stream
+  - (reverted) Switch to keyframe based seeking instead of frame based seeking
   - All initialization-type functions are called conditionally only if they are necessary
   - Release objects that aren't used during background window instantiation
 - Muted audio streams automatically

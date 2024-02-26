@@ -5,6 +5,7 @@ Keywords=wallpaper;settings; preferences;
 Exec=/System/Applications/komorebi
 Terminal=false
 Type=Application
+Icon=/home/c_byrne/projects/komorebi-pruned-nmonitors/data/Icons/komorebi.svg
 StartupNotify=true
 Categories=GNOME;GTK;System;
 X-GNOME-Autostart-enabled=true
